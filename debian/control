@@ -1,0 +1,28 @@
+Source: fred
+Section: admins
+Priority: optional
+Maintainer: Kevin Chevreuil - Kaisen <kaisen@kaisenlinux.org>
+Build-Depends: debhelper (>= 13), qtbase5-dev (>= 5.8), qtscript5-dev, qtwebengine5-dev, qtpositioning5-dev, libhivex-dev,
+Standards-Version: 4.6.0
+Homepage: https://www.pinguin.lu
+Vcs-Browser: https://gitlab.com/kaisenlinux/packages/fred
+Vcs-Git: https://gitlab.com/kaisenlinux/packages/fred.git
+
+Package: fred
+Architecture: any
+Depends: ${shlibs:Depends}
+Recommends: fred-reports
+Description: Forensic Registry EDitor
+ Forensic Registry EDitor (fred) is a cross-platform M$ registry
+ hive editor with special features useful during forensic
+ analysis.
+
+Package: fred-reports
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Forensic Registry EDitor (reports)
+ Forensic Registry EDitor (fred) is a cross-platform M$ registry
+ hive editor with special features useful during forensic
+ analysis.
+ .
+ This package contains the report-templates for fred.

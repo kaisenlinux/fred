@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>resources/fred.png</file>
+        <file alias="close_button">resources/close_button.jpg</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,93 @@
+diff --git a/lib/hivex.c b/lib/hivex.c
+index 4b9fcf0..374e435 100644
+--- a/lib/hivex.c
++++ b/lib/hivex.c
+@@ -30,7 +30,11 @@
+ #include <unistd.h>
+ #include <errno.h>
+ #include <iconv.h>
+-#include <sys/mman.h>
++#ifndef __MINGW32__
++  #include <sys/mman.h>
++#else
++  #include <windows.h>
++#endif
+ #include <sys/stat.h>
+ #include <assert.h>
+ 
+@@ -63,6 +67,10 @@ static size_t utf16_string_len_in_bytes_max (const char *str, size_t len);
+ struct hive_h {
+   char *filename;
+   int fd;
++#ifdef __MINGW32__
++  HANDLE winmap;
++#endif
++
+   size_t size;
+   int msglvl;
+   int writable;
+@@ -312,9 +320,21 @@ hivex_open (const char *filename, int flags)
+   h->size = statbuf.st_size;
+ 
+   if (!h->writable) {
++#ifndef __MINGW32__
+     h->addr = mmap (NULL, h->size, PROT_READ, MAP_SHARED, h->fd, 0);
+     if (h->addr == MAP_FAILED)
+       goto error;
++#else
++    // Mingw / Gnulib does not support mmap, we have to use native win32api
++    // Create file mapping
++    h->winmap = CreateFileMapping ((HANDLE)_get_osfhandle(h->fd), NULL, PAGE_READONLY, 0, 0, NULL);
++    if (h->winmap == NULL)
++      goto error;
++    // Create map view
++    h->addr = MapViewOfFile (h->winmap, FILE_MAP_READ, 0, 0, h->size);
++    if (h->addr == NULL)
++      goto error;
++#endif
+ 
+     if (h->msglvl >= 2)
+       fprintf (stderr, "hivex_open: mapped file at %p\n", h->addr);
+@@ -532,11 +552,23 @@ hivex_open (const char *filename, int flags)
+   int err = errno;
+   if (h) {
+     free (h->bitmap);
++#ifndef __MINGW32__
+     if (h->addr && h->size && h->addr != MAP_FAILED) {
+-      if (!h->writable)
++#else
++    if (h->addr && h->size && h->addr != NULL) {
++#endif
++      if (!h->writable) {
++#ifndef __MINGW32__
+         munmap (h->addr, h->size);
+-      else
++#else
++        UnmapViewOfFile (h->addr);
++#endif
++      } else
+         free (h->addr);
++#ifdef __MINGW32__
++      if (!h->writable && h->winmap != NULL)
++        CloseHandle (h->winmap);
++#endif
+     }
+     if (h->fd >= 0)
+       close (h->fd);
+@@ -556,9 +588,14 @@ hivex_close (hive_h *h)
+     fprintf (stderr, "hivex_close\n");
+ 
+   free (h->bitmap);
+-  if (!h->writable)
++  if (!h->writable) {
++#ifndef __MINGW32__
+     munmap (h->addr, h->size);
+-  else
++#else
++    UnmapViewOfFile (h->addr);
++    CloseHandle (h->winmap);
++#endif
++  } else
+     free (h->addr);
+   if (h->fd >= 0)
+     r = close (h->fd);

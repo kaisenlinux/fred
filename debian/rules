@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	qmake -qt=qt5 DEFINES+="SYSTEM_REPORT_TEMPLATE_DIR=\'\\\"/usr/share/fred/report_templates\\\"\'"
+	touch configure-stamp
+
+build: build-stamp
+
+build-stamp: configure-stamp
+	dh_testdir
+	$(MAKE) -j$(shell cat /proc/cpuinfo  | grep ^processor | wc -l)
+	lrelease -qt=qt5 fred.pro
+
+	touch $@

@@ -1,0 +1,17 @@
+report_templates/NTUSER_Autoruns.qs usr/share/fred/report_templates/
+report_templates/NTUSER_LaunchedApplications.qs usr/share/fred/report_templates/
+report_templates/NTUSER_RecentDocs.qs usr/share/fred/report_templates/
+report_templates/NTUSER_TypedUrls.qs usr/share/fred/report_templates/
+report_templates/NTUSER_Windows7_SearchKeywords.qs usr/share/fred/report_templates/
+report_templates/NTUSER_Windows7_TypedPaths.qs usr/share/fred/report_templates/
+report_templates/NTUSER_WindowsLiveAccounts.qs usr/share/fred/report_templates/
+report_templates/SAM_UserAccounts.qs usr/share/fred/report_templates/
+report_templates/SOFTWARE_Autoruns.qs usr/share/fred/report_templates/
+report_templates/SOFTWARE_ProfileList.qs usr/share/fred/report_templates/
+report_templates/SOFTWARE_WindowsVersion.qs usr/share/fred/report_templates/
+report_templates/SYSTEM_BackupRestore.qs usr/share/fred/report_templates/
+report_templates/SYSTEM_CurrentNetworkSettings.qs usr/share/fred/report_templates/
+report_templates/SYSTEM_Services.qs usr/share/fred/report_templates/
+report_templates/SYSTEM_ShutdownTime.qs usr/share/fred/report_templates/
+report_templates/SYSTEM_SystemTimeInfo.qs usr/share/fred/report_templates/
+report_templates/SYSTEM_UsbStorageDevices.qs usr/share/fred/report_templates/
