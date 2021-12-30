@@ -1,5 +1,5 @@
 Source: fred
-Section: admins
+Section: utils
 Priority: optional
 Maintainer: Kevin Chevreuil - Kaisen <kaisen@kaisenlinux.org>
 Build-Depends: debhelper (>= 13), qtbase5-dev (>= 5.8), qtscript5-dev, qtwebengine5-dev, qtpositioning5-dev, libhivex-dev,
@@ -11,7 +11,7 @@ Vcs-Git: https://gitlab.com/kaisenlinux/packages/fred.git
 Package: fred
 Architecture: any
 Depends: ${shlibs:Depends}
-Recommends: fred-reports
+Recommends: fred-reports (= ${source:Version}),
 Description: Forensic Registry EDitor
  Forensic Registry EDitor (fred) is a cross-platform M$ registry
  hive editor with special features useful during forensic

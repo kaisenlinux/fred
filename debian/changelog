@@ -1,3 +1,10 @@
+fred (0.2.0-2kaisen) kaisen-packages; urgency=medium
+
+  * Install fred icon
+  * Change admins by utils in control file
+
+ -- Kevin Chevreuil - Kaisen <kaisen@kaisenlinux.org>  Thu, 30 Dec 2021 01:38:17 +0100
+
 fred (0.2.0-1kaisen) kaisen-packages; urgency=medium
 
   * First packaging for Kaisen Linux
